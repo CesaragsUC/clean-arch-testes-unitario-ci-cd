@@ -13,16 +13,5 @@ namespace CleanArch.API.Test.Funcionario
             _fixture = fixture;
         }
 
-
-
-        [Fact(DisplayName = "Cadastrar Funcionario Com sucesso")]
-        [Trait("Funcionario", "Integration API")]
-        public async Task Cadastrar_Categoria_Valido_DeveRetornar_Ok()
-        {
-            //Arrange
-
-            Assert.True(true);
-
-        }
     }
 }
