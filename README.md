@@ -1,3 +1,5 @@
+[![Testes do projeto](https://github.com/CesaragsUC/clean-arch-testes-unitario-ci-cd/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/CesaragsUC/clean-arch-testes-unitario-ci-cd/actions/workflows/ci-cd.yaml)
+
 #### Arquitetura limpa .NET Core 8 com xUnit 🧪🤓
 
 Uma API em .NET Core 8.0.x com foco em testes com o xUnit.
