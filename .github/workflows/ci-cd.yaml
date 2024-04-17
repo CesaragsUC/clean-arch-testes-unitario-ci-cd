@@ -3,7 +3,7 @@ name: Integracao continua e Inplantacao
 on:
     push:
         branches:
-            - master
+            - main
 
 jobs:
     build:
