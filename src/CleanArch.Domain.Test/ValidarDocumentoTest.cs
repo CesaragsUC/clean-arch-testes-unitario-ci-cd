@@ -89,7 +89,7 @@ namespace CleanArch.Domain.Test
         public void CI_CD_Teste()
         {
 
-            Assert.True(1==1);
+            Assert.True(1==2);
         }
     }
 }
