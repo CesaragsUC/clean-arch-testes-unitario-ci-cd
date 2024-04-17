@@ -1,0 +1,24 @@
+name: Integracao continua e Inplantacao
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout para a master ⭐
+              uses: actions/checkout@v4.1.1
+
+            - name: Configurando .NET Core SDK 🔧
+              uses: actions/setup-dotnet@v4.0.0
+              with:
+                  dotnet-version: '8.0.x'
+
+            - name: Restaurando dependencias ⏳      
+              run: dotnet-restore
+                
+            - name: Build da aplicacao 🚀
+              run: dotnet build -c Release --no-restore           
