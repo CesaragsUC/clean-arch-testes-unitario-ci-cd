@@ -1,4 +1,4 @@
-#### Arquitetura limpa .NET Core 8 com xUnit
+#### Arquitetura limpa .NET Core 8 com xUnit 🧪🤓
 
 Uma API em .NET Core 8.0.x com foco em testes com o xUnit.
 
