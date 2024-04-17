@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Test
@@ -81,6 +82,14 @@ namespace CleanArch.Domain.Test
 
             // Assert
             Assert.False(result.IsValidarRG(rgInValido));
+        }
+
+        [Fact(DisplayName = "CI CD Test")]
+        [Trait("Documento", "Validacao")]
+        public void CI_CD_Teste()
+        {
+
+            Assert.True(1==0);
         }
     }
 }
