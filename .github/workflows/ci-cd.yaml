@@ -9,14 +9,17 @@ env:
     DOTNET_VERSION: '8.0.x'
     AZURE_SECRET: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }} # variavel de ambiente que contem o secret do Azure
     AZURE_WEBAPP_NAME: 'cleanarchdemo' # nome do WebApp no Azure
+    
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
+
             - name: Checkout para a master ⭐
               uses: actions/checkout@v4.1.1
               with:
                    fetch-depth: 0
+
 
             - name: Configurando .NET Core SDK 🔧
               uses: actions/setup-dotnet@v4.0.0
@@ -33,17 +36,62 @@ jobs:
               run: dotnet test -c Release --no-build
 
 
+            - name: Set up JDK 17
+              uses: actions/setup-java@v3
+              with:
+                java-version: 17
+                distribution: 'zulu' # Alternative distribution options are available.
+
+
+            - name: Cache SonarCloud packages
+              uses: actions/cache@v3
+              with:
+                     path: ~\sonar\cache
+                     key: ${{ runner.os }}-sonar
+                     restore-keys: ${{ runner.os }}-sonar 
+
+            - name: Cache SonarCloud scanner
+              id: cache-sonar-scanner
+              uses: actions/cache@v3
+              with:
+                path: .\.sonar\scanner
+                key: ${{ runner.os }}-sonar-scanner
+                restore-keys: ${{ runner.os }}-sonar-scanner
+
+            - name: Install SonarCloud scanner
+              if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+              shell: powershell
+              run: |
+                New-Item -Path .\.sonar\scanner -ItemType Directory
+                dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+                
+            - name: Build and analyze
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              shell: powershell
+              run: |
+                .\.sonar\scanner\dotnet-sonarscanner begin /k:"CesaragsUC_clean-arch-testes-unitario-ci-cd" /o:"cesaragsuc" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+                 dotnet build --no-incremental
+                .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+
+
+
+
+
+
             #abaixo temos as configuracoes necessária para fazermos a publicação da aplicação e o deploy no Azure WebApp  
 
-            - name: Fazendo a publicação da aplicação 📢
-              run: dotnet publish -c Release -o ./publish # pasta onde a aplicação será publicada
+            # - name: Fazendo a publicação da aplicação 📢
+            #   run: dotnet publish -c Release -o ./publish # pasta onde a aplicação será publicada
 
-            - name: Fazendo deploy no Azure WebApp ☁️
-              uses: Azure/webapps-deploy@v3.0.1
-              with:
-                   app-name: ${{ env.AZURE_WEBAPP_NAME }}
-                   publish-profile: ${{ env.AZURE_SECRET }}
-                   package: ./publish # pasta onde a aplicacao foi publicada
+            # - name: Fazendo deploy no Azure WebApp ☁️
+            #   uses: Azure/webapps-deploy@v3.0.1
+            #   with:
+            #        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+            #        publish-profile: ${{ env.AZURE_SECRET }}
+            #        package: ./publish # pasta onde a aplicacao foi publicada
             
 
 
