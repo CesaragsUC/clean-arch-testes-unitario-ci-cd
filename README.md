@@ -24,6 +24,8 @@ Foi aplicado os principios do SOLID e código limpo.
  > SQLite
 >
 > CI/CD
+>
+> Deploy Azure WebApp
 
 <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*PnPaqZV3b_0GdetPX4tXng.png"  width="500" height="150" />
 
