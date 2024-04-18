@@ -6,7 +6,7 @@ on:
             - main
 
     pull_request:
-            branches: [ "main" ]
+                types: [opened, synchronize, reopened]
 
 permissions: 
           pull-requests: read # allows SonarCloud to decorate PRs with analysis results
@@ -15,7 +15,6 @@ env:
     DOTNET_VERSION: '8.0.x'
     AZURE_SECRET: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }} # variavel de ambiente que contem o secret do Azure
     AZURE_WEBAPP_NAME: 'cleanarchdemo' # nome do WebApp no Azure
-    SONAR_TOKEN_KEY: ${{ secrets.SONAR_TOKEN }} # variavel de ambiente que contem o token do SonarCloud
 
 jobs:
     build:
@@ -41,11 +40,15 @@ jobs:
               run: dotnet test -c Release --no-build
 
             - name: SonarCloud Scan 🔍
-              uses: SonarSource/sonarcloud-github-action@master
+              uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
               env:
-                  SONAR_TOKEN: ${{ env.SONAR_TOKEN_KEY }}
-                  sonar.organization: CesaragsUC_clean-arch-testes-unitario-ci-cd
-                  sonar.projectKey: cesaragsuc
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN  }}
+              with:
+                args: >    
+                   -Dsonar.projectKey= CesaragsUC_clean-arch-testes-unitario-ci-cd
+                   -Dsonar.organization= cesaragsuc
+                   -Dsonar.host.url=https://sonarcloud.io
 
 
             # abaixo temos as configuracoes necessária para fazermos a publicação da aplicação e o deploy no Azure WebApp  
