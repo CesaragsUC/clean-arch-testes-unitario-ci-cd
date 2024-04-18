@@ -44,6 +44,8 @@ jobs:
               uses: SonarSource/sonarcloud-github-action@master
               env:
                   SONAR_TOKEN: ${{ env.SONAR_TOKEN_KEY }}
+                  sonar.organization: CesaragsUC_clean-arch-testes-unitario-ci-cd
+                  sonar.projectKey: cesaragsuc
 
 
             # abaixo temos as configuracoes necessária para fazermos a publicação da aplicação e o deploy no Azure WebApp  
