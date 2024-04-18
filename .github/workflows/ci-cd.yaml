@@ -5,6 +5,9 @@ on:
         branches:
             - main
 
+    pull_request:
+           types: [opened, synchronize, reopened]            
+
 env:
     DOTNET_VERSION: '8.0.x'
     AZURE_SECRET: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }} # variavel de ambiente que contem o secret do Azure
@@ -12,7 +15,7 @@ env:
     
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: windows-latest
         steps:
 
             - name: Checkout para a master ⭐
@@ -64,7 +67,7 @@ jobs:
               run: |
                 New-Item -Path .\.sonar\scanner -ItemType Directory
                 dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-                
+
             - name: Build and analyze
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
