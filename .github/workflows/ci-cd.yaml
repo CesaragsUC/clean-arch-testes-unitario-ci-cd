@@ -4,6 +4,10 @@ on:
     push:
         branches:
             - main
+env:
+    DOTNET_VERSION: '8.0.x'
+    AZURE_SECRET: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }} # variavel de ambiente que contem o secret do Azure
+    AZURE_WEBAPP_NAME: 'cleanarchdemo' # nome do WebApp no Azure
 
 jobs:
     build:
@@ -15,7 +19,7 @@ jobs:
             - name: Configurando .NET Core SDK 🔧
               uses: actions/setup-dotnet@v4.0.0
               with:
-                  dotnet-version: '8.0.x'
+                  dotnet-version: ${{ env.DOTNET_VERSION }}
 
             - name: Restaurando dependencias ⏳      
               run: dotnet restore
@@ -25,3 +29,19 @@ jobs:
               
             - name: Executando os Testes 🧪
               run: dotnet test -c Release --no-build
+
+            # abaixo temos as configuracoes necessária para fazermos a publicação da aplicação e o deploy no Azure WebApp  
+
+            - name: Fazendo a publicação da aplicação 📢
+              run: dotnet publish -c Release -o ./publish # pasta onde a aplicação será publicada
+
+            - name: Fazendo deploy no Azure WebApp ☁️
+              uses: Azure/webapps-deploy@v3.0.1
+              with:
+                    app-name: ${{ env.AZURE_WEBAPP_NAME }}
+                    publish-profile: ${{ env.AZURE_SECRET }}
+                    package: ./publish # pasta onde a aplicacao foi publicada
+            
+
+
+            
