@@ -76,16 +76,10 @@ jobs:
               run: |
                 .\.sonar\scanner\dotnet-sonarscanner begin /k:"CesaragsUC_clean-arch-testes-unitario-ci-cd" /o:"cesaragsuc" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
                  dotnet build --no-incremental
-                 dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
                 .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
 
-
-
-
-
-
-            #abaixo temos as configuracoes necessária para fazermos a publicação da aplicação e o deploy no Azure WebApp  
+            ##abaixo temos as configuracoes necessária para fazermos o deploy no Azure WebApp  
 
             # - name: Fazendo a publicação da aplicação 📢
             #   run: dotnet publish -c Release -o ./publish # pasta onde a aplicação será publicada
