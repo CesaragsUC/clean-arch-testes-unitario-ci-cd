@@ -18,6 +18,9 @@ jobs:
         runs-on: windows-latest
         steps:
 
+            - name: Instalando coverage
+              run: dotnet tool install --global dotnet-coverage
+              
             - name: Checkout para a master ⭐
               uses: actions/checkout@v4.1.1
               with:
@@ -75,7 +78,8 @@ jobs:
               shell: powershell
               run: |
                 .\.sonar\scanner\dotnet-sonarscanner begin /k:"CesaragsUC_clean-arch-testes-unitario-ci-cd" /o:"cesaragsuc" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
-                 dotnet build --no-incremental
+                  dotnet build --configuration Release
+                  dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'
                 .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
 
