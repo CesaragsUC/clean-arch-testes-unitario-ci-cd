@@ -35,9 +35,6 @@ jobs:
             - name: Check current directory
               run: pwd  # Verifica o diretório atual
             
-            - name: List files
-              run: ls -la  # Lista os arquivos e pastas no diretório atual
-
 
             - name: Restaurando dependencias ⏳      
               run: dotnet restore --force --no-cache
