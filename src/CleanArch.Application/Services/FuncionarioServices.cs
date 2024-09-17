@@ -182,5 +182,10 @@ namespace CleanArch.Application.Services
         {
             return numero ;
         }
+
+        private async Task<int> Novometodo04(int numero)
+        {
+            return numero;
+        }
     }
 }
