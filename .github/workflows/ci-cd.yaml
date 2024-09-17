@@ -31,9 +31,16 @@ jobs:
               uses: actions/setup-dotnet@v4.0.0
               with:
                   dotnet-version: ${{ env.DOTNET_VERSION }}
+                  
+            - name: Check current directory
+              run: pwd  # Verifica o diretório atual
+            
+            - name: List files
+              run: ls -la  # Lista os arquivos e pastas no diretório atual
+
 
             - name: Restaurando dependencias ⏳      
-              run: dotnet restore
+              run: dotnet restore --force --no-cache
                 
             - name: Build da aplicacao 🚀
               run: dotnet build -c Release --no-restore      
