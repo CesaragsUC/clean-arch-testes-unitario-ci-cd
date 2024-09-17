@@ -177,5 +177,10 @@ namespace CleanArch.Application.Services
         {
             return numero < 0;
         }
+
+        private async Task<int> Novometodo03(int numero)
+        {
+            return numero ;
+        }
     }
 }
