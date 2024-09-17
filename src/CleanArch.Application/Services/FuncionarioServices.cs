@@ -168,5 +168,24 @@ namespace CleanArch.Application.Services
             });
         }
 
+        private async Task<bool> Novometodo01(int numero)
+        {
+            return numero > 0;
+        }
+
+        private async Task<bool> Novometodo02(int numero)
+        {
+            return numero < 0;
+        }
+
+        private async Task<int> Novometodo03(int numero)
+        {
+            return numero ;
+        }
+
+        private async Task<int> Novometodo04(int numero)
+        {
+            return numero;
+        }
     }
 }
